@@ -2,9 +2,50 @@ import SelectBox from './SelectBox';
 import InputBasic from './InputBasic';
 import ButtonSec from './ButtonSec';
 import MyTable from './MyTable';
+import {useState} from 'react'
+import ClayButton from '@clayui/button';
+import ClayModal, {useModal} from '@clayui/modal';
+
+const Modal = () => {
+  const [visible, setVisible] = useState(false);
+  const { observer, onClose } = useModal({
+    onClose: () => setVisible(false)
+  });
+
+  return (
+    <>
+      {visible && (
+        <ClayModal
+          observer={observer}
+          size="lg"
+          status="info"
+        >
+          <ClayModal.Header>{"Title"}</ClayModal.Header>
+          <ClayModal.Body>
+            <h1>{"Hello world!"}</h1>
+          </ClayModal.Body>
+          <ClayModal.Footer
+            first={
+              <ClayButton.Group spaced>
+                <ClayButton displayType="secondary">{"Secondary"}</ClayButton>
+                <ClayButton displayType="secondary">{"Secondary"}</ClayButton>
+              </ClayButton.Group>
+            }
+            last={<ClayButton onClick={onClose}>{"Primary"}</ClayButton>}
+          />
+        </ClayModal>
+      )}
+      <ClayButton displayType="secondary" onClick={() => setVisible(true)}>
+        {"افزودن برنامه"}
+      </ClayButton>
+    </>
+  );
+};
+
 
 function TabOne(props) {
     const {data}= props;
+    
     const selectBox1=[{
         label: "تمام",
         value: "1"
@@ -36,7 +77,7 @@ function TabOne(props) {
         </div>
     </div>
     <div className="mb-2 mt-2">
-    <ButtonSec  textbutton="افزودن برنامه"/>
+      {Modal()}
     </div>
     <div ><MyTable data={data}/></div>
   </div></div>
