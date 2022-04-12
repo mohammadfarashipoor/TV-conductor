@@ -57,7 +57,7 @@ const Tabs = () => {
           <ClayTabs.TabPane aria-labelledby="tab-1">
             <div className="ml-5 mr-5 mt-2">
               <div className="bg-gray p-3 rounded">
-                <div className="d-flex align-items-center"><div className="m-1">انطباق با</div><div className="m-1"><SelectBox options={[{
+                <div className="d-flex align-items-center flex-wrap pl-3 pr-3"><div className="m-1">انطباق با</div><div className="m-1"><SelectBox options={[{
         label: "تمام",
         value: "1"
       },
@@ -65,9 +65,9 @@ const Tabs = () => {
         label: "Option 2",
         value: "2"
       }]}/></div><div className="m-1">فیلد های زیر</div></div>
-                <div className="d-flex w-100">
-                  <div className="m-1 w-100"><InputBasic name="نام" /></div>
-                  <div className="m-1 w-100"><div >نوع برنامه</div><div><SelectBox 
+                <div className="d-flex w-100 col-lg-12 flex-lg-nowrap flex-wrap">
+                  <div className="w-100 col-lg-6 col-sm-12"><InputBasic name="نام" /></div>
+                  <div className="w-100 col-lg-6 col-sm-12"><div className="mb-1 ">نوع برنامه</div><div><SelectBox 
                   options={[{
                     label: "تمام",
                     value: "1"
@@ -78,9 +78,13 @@ const Tabs = () => {
                   }]}
                   /></div></div> 
                   </div>
+                  <div className="mb-2 mt-2">
                   <ButtonSec textbutton="جست و جو"/>
+                  </div>
               </div>
-              <ButtonSec textbutton="افزودن برنامه"/>
+              <div className="mb-2 mt-2">
+              <ButtonSec  textbutton="افزودن برنامه"/>
+              </div>
               <div ><MyTable data={data}/></div>
             </div>
           </ClayTabs.TabPane>
