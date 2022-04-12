@@ -6,6 +6,7 @@
     "@clayui/css": "^3.52.0",
     "@clayui/form": "^3.52.0",
     "@clayui/loading-indicator": "^3.40.0",
+    "@clayui/modal": "^3.52.0",
     "@clayui/pagination-bar": "^3.52.0",
     "@clayui/table": "^3.40.0",
     "@clayui/tabs": "^3.52.0",
