@@ -1,11 +1,11 @@
 import ClayButton from '@clayui/button';
-function ButtonSec(props) {
+function Button(props) {
   return (
-    <ClayButton displayType="secondary">
+    <ClayButton displayType={props.type}>
     {props.textbutton}
 </ClayButton>
 
   )
 }
 
-export default ButtonSec
+export default Button;

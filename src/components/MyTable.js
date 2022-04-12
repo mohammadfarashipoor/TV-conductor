@@ -2,11 +2,15 @@ import ClayTable from '@clayui/table';
 import {useState} from 'react';
 import Pagination from './Pagination';
 import _ from 'lodash';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 
 
 const MyTable = (props) => {
   const {data}= props;
   const [items, setItems] = useState();
+  const ComponentLoading = () => {
+    return <div className="loading"><ClayLoadingIndicator small/></div>;
+  };
   let countItem;
   const showitems =(activePage,delta)=>{
       const startIndex = (activePage - 1)* delta;
@@ -31,7 +35,7 @@ const MyTable = (props) => {
           </ClayTable.Row>
         </ClayTable.Head>
         <ClayTable.Body>
-          {items===undefined ? (<div >waiting</div>) :Object.values(items).map((item) => (
+          {items===undefined ? (<ComponentLoading />) :Object.values(items).map((item) => (
                       <ClayTable.Row key={item.id}>
                       <ClayTable.Cell headingTitle>{"White and Red"}</ClayTable.Cell>
                       <ClayTable.Cell>{"South America"}</ClayTable.Cell>
