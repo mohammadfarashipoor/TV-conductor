@@ -1,5 +1,5 @@
 import SelectBox from './SelectBox';
-import Button from './Button';
+import WeekBtn from './WeekBtn'
 import Table from './Table';
 
 function TabTwo() {
@@ -18,35 +18,8 @@ function TabTwo() {
           <div className="m-3">نوع کنداکتور</div>
           <div><SelectBox className="m-3" options={selectBox} /></div>
         </div>
-        <div className="d-flex align-items-center flex-wrap p-3">
-            <div className="m-1">
-            <Button type="secondary" textbutton="شنبه">
-			</Button>
-            </div>
-            <div className="m-1">
-            <Button type="secondary" textbutton="یکشنبه">
-			</Button>
-            </div>
-            <div className="m-1">
-            <Button type="secondary" textbutton="دوشنبه">
-			</Button>
-            </div>
-            <div className="m-1">
-            <Button type="secondary" textbutton="سه شنبه">
-			</Button>
-            </div>
-            <div className="m-1">
-            <Button type="secondary" textbutton="چهارشنبه">
-			</Button>
-            </div>
-            <div className="m-1">
-            <Button type="secondary" textbutton="پنج شنبه">
-			</Button>
-            </div>            
-            <div className="m-1">
-            <Button type="secondary" textbutton="جمعه">
-			</Button>
-            </div>
+        <div>
+            <WeekBtn/>
             </div>
         <div>
             <Table/>

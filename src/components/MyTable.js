@@ -9,7 +9,7 @@ const MyTable = (props) => {
   const {data}= props;
   const [items, setItems] = useState();
   const ComponentLoading = () => {
-    return <div className="loading"><ClayLoadingIndicator small/></div>;
+    return <tr><td colSpan="4"><div className="loading"><ClayLoadingIndicator small/></div></td></tr>;
   };
   let countItem;
   const showitems =(activePage,delta)=>{
