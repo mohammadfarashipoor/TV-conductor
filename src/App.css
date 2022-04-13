@@ -18,3 +18,7 @@
 left: 50%;
 top: 50%;
 }
+#active > button{
+    background-color: #000f47;
+    color: #fff;
+}
