@@ -2,7 +2,7 @@ import React,{useState} from 'react';
 import Button from './Button';
 
 
-function WeekBtn() {
+function WeekBtn(props) {
   const [button,setButton]=useState(1);
   const week = [
     { id:1 ,
@@ -25,11 +25,15 @@ function WeekBtn() {
       return "active";
     }
   }
+  const clickBtn = (item) => {
+    setButton(item)
+    props.selectbtn(item)
+  };
   return (
     <div className="d-flex align-items-center flex-wrap p-3 
     ">
     {week.map((item)=>(
-      <div className="m-1" key={item.id}  onClick={() =>{setButton(item.id)}} id={activeBtn(item.id)}>
+      <div className="m-1" key={item.id}  onClick={() =>{clickBtn(item.id)}} id={activeBtn(item.id)}>
         <Button type="secondary" textbutton={item.day}>
         </Button>
       </div>

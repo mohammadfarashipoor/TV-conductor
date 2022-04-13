@@ -10,7 +10,11 @@ function TabTwo() {
         {
         label: "Option 2",
         value: "2"
-        }];
+        }
+    ];
+    const selectBtn=(item)=>{
+      console.log(item)
+    }
    
   return (
     <div className="ml-5 mr-5 mt-2">
@@ -19,7 +23,7 @@ function TabTwo() {
           <div><SelectBox className="m-3" options={selectBox} /></div>
         </div>
         <div>
-            <WeekBtn/>
+            <WeekBtn selectbtn={selectBtn}/>
             </div>
         <div>
             <Table/>
