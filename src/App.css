@@ -22,3 +22,12 @@ top: 50%;
     background-color: #000f47;
     color: #fff;
 }
+.Radiogroup > div{
+    margin-right: 10px;
+}
+.cursor-pointer{
+    cursor: pointer;
+}
+.listshow{
+    margin-top: -1.5rem;
+}

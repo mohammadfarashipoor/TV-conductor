@@ -10,6 +10,8 @@ const InputBasic = (props) => {
           id="basicInputText"
           placeholder={props.placeholder}
           type="text"
+          component={props.component}
+          onClick={props.onClick}
         />
       </ClayForm.Group>
     );
