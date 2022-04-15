@@ -1,6 +1,7 @@
 import React,{useState} from 'react';
 import InputRadio from './InputRadio';
 import InputBasic from './InputBasic';
+import InputComponent from './InputComponent'
 import '../App.css';
 import MyCheckBox from './MyCheckBox';
 import SelectBox from './SelectBox'
@@ -158,7 +159,7 @@ function DetailItem() {
         <div >
         <OutsideClickHandler
         onOutsideClick={() => {outsideClickHandler()}}>
-            <InputBasic onClick={insideClickHandler} onChange={onchange}  name={"نام"}/>
+            <InputBasic onClick={insideClickHandler} onChange={onchange} placeholder={null}  name={"نام"}/>
             {showList && (
                 <div className="listshow position-absolute w-100"><Table/></div>
             )}
@@ -181,7 +182,7 @@ function DetailItem() {
         </div>
             <div><p className="font-weight-light">این گزینه صرفا جهت نوع نمایش متن و عکس در برتلت " نمایش جدول پخش" کاربرد دارد و در این نمایش ، فقط برنامه هایی نمایش داده می شود که این کزینه انتخاب شده باشد</p></div>
         <div>
-            <InputBasic component={"textarea"} name={"توضیح"}/>
+            <InputComponent placeholder={null} onClick={null} component={"textarea"} name={"توضیح"}/>
         </div>
         <div>
             <SelectBox options={selectBox}/>

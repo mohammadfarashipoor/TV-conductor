@@ -2,7 +2,7 @@ import ClayForm, {ClayInput} from '@clayui/form';
 
 
 
-const InputBasic = (props) => {
+const InputComponent = (props) => {
     return (
       <ClayForm.Group>
         <label htmlFor="basicInputText">{props.name}</label>
@@ -10,10 +10,11 @@ const InputBasic = (props) => {
           id="basicInputText"
           placeholder={props.placeholder}
           type="text"
+          component={props.component}
           onClick={props.onClick}
         />
       </ClayForm.Group>
     );
   };
   
-export default InputBasic;  
+export default InputComponent;  
