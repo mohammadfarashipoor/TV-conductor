@@ -9,6 +9,7 @@ const SelectBox = (props) => {
             key={item.value}
             label={item.label}
             value={item.value}
+            onClick={props.onClick}
           />
         ))}
       </ClaySelect>

@@ -1,13 +1,16 @@
 import {useState} from 'react'
 import {ClayRadio, ClayRadioGroup} from '@clayui/form';
 
-const InputRadio = () => {
+const InputRadio = (props) => {
 	const [value, setValue] = useState('سیما');
-
+	function handelClick(value){
+		setValue(value)
+		props.onChange(value)
+	}
 	return (
 		<ClayRadioGroup
 			inline
-			onSelectedValueChange={val => setValue(val)}
+			onSelectedValueChange={value => handelClick(value)}
 			selectedValue={value} className="mr-2 Radiogroup"
             >
 			<ClayRadio label="سیما" value="سیما" />

@@ -1,8 +1,9 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import InputRadio from './InputRadio';
 import InputBasic from './InputBasic';
 import InputComponent from './InputComponent'
 import '../App.css';
+import axios from "axios";
 import MyCheckBox from './MyCheckBox';
 import SelectBox from './SelectBox'
 import Button from './Button';
@@ -21,12 +22,91 @@ function DetailItem() {
         title: "Option 2",
         value: "2"
         }]);
+    const [isLoading,setIsLoading] = useState(true);
+    const [myname,setMayName]=useState();
+    const [special,setSpecial]=useState(false);
+    const [explain,setExplain]=useState();
+    const [checked, setChecked] = useState([]);
+    const [enable,setEnable] = useState(false);
+    const [noon,setNoon]=useState();
+    const [min,setMin]=useState();
+    const [hour,setHour]=useState();
+    const [select,setSelect]=useState();
+    const [radio,setRadio]=useState();
+    async function fetchData() {
+        try {
+            const result = await axios.get(
+                "https://6242dd49b6734894c157e955.mockapi.io/date/d1/project1"
+                );
+                setData(result.data)
+                setIsLoading(false)
+              } catch (error) {
+                console.error(error);
+        }
+        }
+    async function setMydata(data){
+        await axios.post('https://6242dd49b6734894c157e955.mockapi.io/date/d1/project1', data)
+          .then(response => console.log(response.data));
+    }
+    const setMyRadio=(item)=>{
+        setRadio(item)
+    }
+    const myData=()=>{
+        console.log("cccc")
+        let newItem = {
+            name: myname ,
+            time: {noon,hour,min},
+            day : checked,
+            type: radio,
+            explain:explain,
+            status: enable,
+            special:special
+        }
+        setMydata(newItem)
+    }
+        useEffect(() => {
+          fetchData();
+        }, []);    
+
+    const setDay=(item,value)=>{
+        let updateList = [...checked];
+        if(value){
+            for(var i = 0; i < updateList.length; i++) {
+                if(updateList[i].id === item.id) {
+                    updateList.splice(i, 1);
+                }}
+        }else{
+            updateList = [...checked,item];
+        }
+        setChecked(updateList) 
+    }
+    const handelEnable=()=>{
+        setEnable(!enable);
+    }
+    const handleExplain = (e) => {
+         setExplain(e.target.value)
+    };
+    const handleNoon = (e) => {
+        setNoon(e.target.value)
+    }
+    const handleMin = (e) => {
+        setMin(e.target.value)
+    }
+    const handleHours = (e) => {
+        setHour(e.target.value)
+    }
+    const handleSelect =(e)=>{
+        setSelect(e.target.value)
+    }
 
     onchange = e => {
+        setMayName(e.target.value);
         setSearch(e.target.value);
       };
-      const filtereduser = data.filter(data => {
-        return data.title.toLowerCase().indexOf(search.toLowerCase()) !== -1;
+      const filtereduser = data.filter(item => {
+          if(item.name!==undefined){
+              return item.name.toLowerCase().indexOf(search.toLowerCase()) !== -1;
+          }
       });
 
      const insideClickHandler=()=>{
@@ -154,14 +234,17 @@ function DetailItem() {
         <div className="ml-5 col-lg-5 p-0">
         <div className="d-flex flex-wrap">
             <div>نوع برنامه</div>
-            <div><InputRadio/></div>
+            <div><InputRadio onChange={setMyRadio}/></div>
         </div>
         <div >
         <OutsideClickHandler
         onOutsideClick={() => {outsideClickHandler()}}>
             <InputBasic onClick={insideClickHandler} onChange={onchange} placeholder={null}  name={"نام"}/>
             {showList && (
-                <div className="listshow position-absolute w-100"><Table/></div>
+                data!==[] ?
+                filtereduser.map((item)=>(
+                    <div className="listshow position-absolute w-100" key={item.id}><Table title={item.name}/></div>
+                )):<div>هیچ برنامه ای وجود ندارد</div> 
             )}
         </OutsideClickHandler>
 
@@ -178,36 +261,36 @@ function DetailItem() {
         </div>
         </div>
         <div className="d-flex mt-5">
-            <MyCheckBox options={"برنامه ویژه"}/>
+            <MyCheckBox options={"برنامه ویژه"} onClick={()=>{setSpecial(!special)}}/>
         </div>
             <div><p className="font-weight-light">این گزینه صرفا جهت نوع نمایش متن و عکس در برتلت " نمایش جدول پخش" کاربرد دارد و در این نمایش ، فقط برنامه هایی نمایش داده می شود که این کزینه انتخاب شده باشد</p></div>
         <div>
-            <InputComponent placeholder={null} onClick={null} component={"textarea"} name={"توضیح"}/>
+            <InputComponent placeholder={null} onClick={handleExplain} component={"textarea"} name={"توضیح"}/>
         </div>
         <div>
-            <SelectBox options={selectBox}/>
+            <SelectBox options={selectBox} onClick={handleSelect}/>
         </div>
         <div className="mt-5">
             <div className="mb-2">زمان پخش</div>
             <div className="d-flex flex-wrap">
-                <div className="mr-2 ml-2"><SelectBox options={selectBox1}/></div>
-                <div className="mr-2 ml-2"><SelectBox options={selectMin}/></div>
-                <div className="mr-2 ml-2"><SelectBox options={selectHours}/></div>
+                <div className="mr-2 ml-2"><SelectBox onClick={handleNoon} options={selectBox1}/></div>
+                <div className="mr-2 ml-2"><SelectBox onClick={handleMin} options={selectMin}/></div>
+                <div className="mr-2 ml-2"><SelectBox onClick={handleHours} options={selectHours}/></div>
             </div>
         </div>
         <div className="mt-4 mr-3">
                 <div className="mb-2">روز های پخش:</div>
                 <div>
                 {week.map((item)=>(
-                    <div className="d-flex m-1"key={item.id}><MyCheckBox options={item.day}/>
+                    <div className="d-flex m-1"key={item.id} ><MyCheckBox item={item} onClick={setDay} options={item.day}/>
                     </div>
                 ))}
             </div>
         </div>
-        <div className="d-flex mt-4"><MyCheckBox options={"فعال"}/></div>
+        <div className="d-flex mt-4"><MyCheckBox onClick={handelEnable} options={"فعال"}/></div>
         <div className="d-flex flex-wrap mt-5">
             <div className="mr-2 ml-2"><Button type="secondary"textbutton={"انصراف"}/></div>
-            <div ><Button type="primary"textbutton={"ذخیره"}/></div>
+            <div ><Button onClick={myData} type="primary"textbutton={"ذخیره"}/></div>
         </div>           
     </div>
   )

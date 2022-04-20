@@ -13,7 +13,7 @@ const Tabs = () => {
   async function fetchData() {
     try {
       const result = await axios.get(
-        "https://6242dd49b6734894c157e955.mockapi.io/date/d1/Times"
+        "https://6242dd49b6734894c157e955.mockapi.io/date/d1/project1"
         );
         setData(result.data)
         setIsLoading(false)

@@ -60,9 +60,14 @@ function TabOne(props) {
         value: "1"
       },
       {
-        label: "Option 2",
+        label: "سیما",
         value: "2"
-      }];
+      },
+      {
+        label: "صدا",
+        value: "3"
+      }
+    ];
       
   return (
     <div>            

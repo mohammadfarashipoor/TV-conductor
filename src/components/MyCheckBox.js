@@ -3,13 +3,16 @@ import {useState} from 'react'
 
 const MyCheckBox = (props) => {
     const [value, setValue] = useState(false);
-  
+    const handelClick = ()=>{
+      setValue(val => !val)
+      props.onClick(props.item,value)
+    }
     return (
       <ClayCheckbox
         aria-label={props.options}
         checked={value}
-        onChange={() => setValue(val => !val)}
-        label={props.options}
+        onChange={() => handelClick()}
+        label={props.options}     
       />
     );
   };
