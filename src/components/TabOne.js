@@ -3,46 +3,7 @@ import InputBasic from './InputBasic';
 import Button from './Button';
 import MyTable from './MyTable';
 import {useState} from 'react'
-import ClayButton from '@clayui/button';
-import ClayModal, {useModal} from '@clayui/modal';
-
-/////popup window
-const Modal = () => {
-  const [visible, setVisible] = useState(false);
-  const { observer, onClose } = useModal({
-    onClose: () => setVisible(false)
-  });
-
-  return (
-    <>
-      {visible && (
-        <ClayModal
-          observer={observer}
-          size="lg"
-          status="info"
-        >
-          <ClayModal.Header>{"Title"}</ClayModal.Header>
-          <ClayModal.Body>
-            <h1>{"Hello world!"}</h1>
-          </ClayModal.Body>
-          <ClayModal.Footer
-            first={
-              <ClayButton.Group spaced>
-                <ClayButton displayType="secondary">{"Secondary"}</ClayButton>
-                <ClayButton displayType="secondary">{"Secondary"}</ClayButton>
-              </ClayButton.Group>
-            }
-            last={<ClayButton onClick={onClose}>{"Primary"}</ClayButton>}
-          />
-        </ClayModal>
-      )}
-      <ClayButton displayType="secondary" onClick={() => setVisible(true)}>
-        {"افزودن برنامه"}
-      </ClayButton>
-    </>
-  );
-};
-
+import {Link} from "react-router-dom";
 
 function TabOne(props) {
     const {data}= props;
@@ -106,7 +67,9 @@ function TabOne(props) {
         </div>
     </div>
     <div className="mb-2 mt-2">
-      {Modal()}
+      <Link to="/add">
+      <Button type="secondary" textbutton="افزودن برنامه" onClick={null}/>
+    </Link>
     </div>
     <div ><MyTable data={mydata}/></div>
   </div></div>

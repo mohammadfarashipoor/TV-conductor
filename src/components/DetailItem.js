@@ -3,6 +3,7 @@ import InputRadio from './InputRadio';
 import InputBasic from './InputBasic';
 import InputComponent from './InputComponent'
 import '../App.css';
+import {Link} from "react-router-dom";
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import axios from "axios";
 import MyCheckBox from './MyCheckBox';
@@ -262,7 +263,6 @@ function DetailItem() {
         </div>
         </div>
         <div className="col-lg-5">
-        <img src="https://picsum.photos/200/300" alt=""/>
         </div>
         </div>
         <div className="d-flex mt-5">
@@ -294,8 +294,8 @@ function DetailItem() {
         </div>
         <div className="d-flex mt-4"><MyCheckBox onClick={handelEnable} options={"فعال"}/></div>
         <div className="d-flex flex-wrap mt-5">
-            <div className="mr-2 ml-2"><Button type="secondary"textbutton={"انصراف"}/></div>
-            <div ><Button onClick={myData} type="primary"textbutton={"ذخیره"}/></div>
+            <div className="mr-2 ml-2"><Link to="/"><Button type="secondary"textbutton={"انصراف"}/></Link></div>
+            <div ><Link to="/"><Button onClick={myData} type="primary"textbutton={"ذخیره"}/></Link></div>
         </div>           
     </div>
       )}</>
