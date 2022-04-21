@@ -1,5 +1,5 @@
 import ClayTable from '@clayui/table';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import Pagination from './Pagination';
 import _ from 'lodash';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
@@ -7,15 +7,20 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 
 const MyTable = (props) => {
   const {data}= props;
-  const [items, setItems] = useState();
+  const [myactivepage,setMyActivePage]= useState();
+  const [mydelta,setMyDelta]= useState();
+  const [countItem,setCountItem]=useState();
+ 
+  useEffect(() => {
+    const startIndex = (myactivepage - 1)* mydelta;
+    setCountItem(_(data).slice(startIndex).take(mydelta).value());
+  }, [data]);
   const ComponentLoading = () => {
     return <tr><td colSpan="4"><div className="loading"><ClayLoadingIndicator small/></div></td></tr>;
   };
-  let countItem;
   const showitems =(activePage,delta)=>{
-      const startIndex = (activePage - 1)* delta;
-      countItem = _(data).slice(startIndex).take(delta).value();
-      setItems(countItem);
+    setMyActivePage(activePage);
+    setMyDelta(delta)
     }
     return (
         <>
@@ -35,14 +40,14 @@ const MyTable = (props) => {
           </ClayTable.Row>
         </ClayTable.Head>
         <ClayTable.Body>
-          {items===undefined ? (<ComponentLoading />) :Object.values(items).map((item) => (
+          {countItem===undefined ? (<ComponentLoading />) :Object.values(countItem).map((item) => (
                       <ClayTable.Row key={item.id}>
-                      <ClayTable.Cell headingTitle>{"White and Red"}</ClayTable.Cell>
-                      <ClayTable.Cell>{"South America"}</ClayTable.Cell>
+                      <ClayTable.Cell headingTitle>{item.name}</ClayTable.Cell>
+                      <ClayTable.Cell>{item.day.toString()}</ClayTable.Cell>
+                      <ClayTable.Cell>{item.time.toString()}</ClayTable.Cell>
                       <ClayTable.Cell>{"Brazil"}</ClayTable.Cell>
-                      <ClayTable.Cell>{"Brazil"}</ClayTable.Cell>
-                      <ClayTable.Cell>{"Brazil"}</ClayTable.Cell>
-                      <ClayTable.Cell>{"Brazil"}</ClayTable.Cell>
+                      <ClayTable.Cell>{item.type==="1"?"سیما":"صدا"}</ClayTable.Cell>
+                      <ClayTable.Cell>{item.status?"فعال":"غیرفعال"}</ClayTable.Cell>
                       <ClayTable.Cell>{"Brazil"}</ClayTable.Cell>
                     </ClayTable.Row>
           ))}

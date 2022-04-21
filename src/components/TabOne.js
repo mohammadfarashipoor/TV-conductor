@@ -46,9 +46,10 @@ const Modal = () => {
 
 function TabOne(props) {
     const {data}= props;
-    
+    const [search,setSearch] = useState("");
+    const [mydata,setMyData] = useState(data);
     const selectBox1=[{
-        label: "تمام",
+      label: "تمام",
         value: "1"
         },
         {
@@ -68,6 +69,30 @@ function TabOne(props) {
         value: "3"
       }
     ];
+      onchange = e => {
+        setSearch(e.target.value);
+        filtereduser()
+      };
+      const filtereduser=() => {
+        let mysearch =[...data]
+        mysearch.filter(item => {
+        if(item.name!==undefined){
+          setMyData(item.name.toLowerCase().indexOf(search.toLowerCase()) !== -1);
+        }
+    })};
+    
+    const handleFilter =(e)=>{
+      let search =[...data]
+      if(e.target.value==="2"){
+        setMyData(search.filter((item)=>(item.type===1)))
+      }
+      if(e.target.value==="3"){
+        setMyData(search.filter((item)=>(item.type===2)))
+        
+      }if(e.target.value==="1"){
+        setMyData(search)
+      }
+    }
       
   return (
     <div>            
@@ -75,9 +100,10 @@ function TabOne(props) {
     <div className="bg-gray p-3 rounded">
       <div className="d-flex align-items-center flex-wrap pl-3 pr-3"><div className="m-1">انطباق با</div><div className="m-1"><SelectBox options={selectBox1}/></div><div className="m-1">فیلد های زیر</div></div>
       <div className="d-flex w-100 col-lg-12 flex-lg-nowrap flex-wrap">
-        <div className="w-100 col-lg-6 col-sm-12"><InputBasic placeholder={null} onClick={null} name="نام" /></div>
+        <div className="w-100 col-lg-6 col-sm-12"><InputBasic onChange={onchange} placeholder={null} onClick={null} name="نام" /></div>
         <div className="w-100 col-lg-6 col-sm-12"><div className="mb-1 ">نوع برنامه</div><div><SelectBox 
         options={selectBox2}
+        onClick={handleFilter}
         /></div></div> 
         </div>
         <div className="mb-2 mt-2">
@@ -87,7 +113,7 @@ function TabOne(props) {
     <div className="mb-2 mt-2">
       {Modal()}
     </div>
-    <div ><MyTable data={data}/></div>
+    <div ><MyTable data={mydata}/></div>
   </div></div>
   )
 }

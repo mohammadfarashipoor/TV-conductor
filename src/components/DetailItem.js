@@ -3,6 +3,7 @@ import InputRadio from './InputRadio';
 import InputBasic from './InputBasic';
 import InputComponent from './InputComponent'
 import '../App.css';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import axios from "axios";
 import MyCheckBox from './MyCheckBox';
 import SelectBox from './SelectBox'
@@ -52,10 +53,9 @@ function DetailItem() {
         setRadio(item)
     }
     const myData=()=>{
-        console.log("cccc")
         let newItem = {
             name: myname ,
-            time: {noon,hour,min},
+            time: [noon,hour,min],
             day : checked,
             type: radio,
             explain:explain,
@@ -227,7 +227,12 @@ function DetailItem() {
         { id:7 ,
           day:"جمعه"}
       ];     
+      const ComponentLoading = () => {
+        return <div className="loading"><ClayLoadingIndicator small/></div>;
+      };
   return (
+      <>{isLoading ? ComponentLoading(): (
+
     <div className="p-4">
         <div className="m-2">نام برنامه</div>
         <div className="d-flex col-lg-12 flex-wrap">
@@ -293,6 +298,7 @@ function DetailItem() {
             <div ><Button onClick={myData} type="primary"textbutton={"ذخیره"}/></div>
         </div>           
     </div>
+      )}</>
   )
 }
 
