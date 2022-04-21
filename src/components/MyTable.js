@@ -7,21 +7,21 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 
 const MyTable = (props) => {
   const {data}= props;
-  const [myactivepage,setMyActivePage]= useState();
-  const [mydelta,setMyDelta]= useState();
-  const [countItem,setCountItem]=useState();
- 
+  const [myactivepage,setMyActivePage]= useState(1);
+  const [mydelta,setMyDelta]= useState(20);
+  const [countItem,setCountItem]=useState(data);
+  const showitems =(activePage,delta)=>{
+    setMyActivePage(activePage);
+    setMyDelta(delta)
+  }
   useEffect(() => {
     const startIndex = (myactivepage - 1)* mydelta;
     setCountItem(_(data).slice(startIndex).take(mydelta).value());
+
   }, [data]);
   const ComponentLoading = () => {
     return <tr><td colSpan="4"><div className="loading"><ClayLoadingIndicator small/></div></td></tr>;
   };
-  const showitems =(activePage,delta)=>{
-    setMyActivePage(activePage);
-    setMyDelta(delta)
-    }
     return (
         <>
         <Pagination countitems={data.length} showitems={showitems}/>
@@ -46,7 +46,7 @@ const MyTable = (props) => {
                       <ClayTable.Cell>{item.day.toString()}</ClayTable.Cell>
                       <ClayTable.Cell>{item.time.toString()}</ClayTable.Cell>
                       <ClayTable.Cell>{"Brazil"}</ClayTable.Cell>
-                      <ClayTable.Cell>{item.type==="1"?"سیما":"صدا"}</ClayTable.Cell>
+                      <ClayTable.Cell>{item.type===1?"سیما":"صدا"}</ClayTable.Cell>
                       <ClayTable.Cell>{item.status?"فعال":"غیرفعال"}</ClayTable.Cell>
                       <ClayTable.Cell>{"Brazil"}</ClayTable.Cell>
                     </ClayTable.Row>
