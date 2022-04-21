@@ -46,7 +46,7 @@ const Modal = () => {
 
 function TabOne(props) {
     const {data}= props;
-    const [search,setSearch] = useState("");
+    const [search,setsearch] = useState("");
     const [mydata,setMyData] = useState(data);
     const selectBox1=[{
       label: "تمام",
@@ -70,17 +70,12 @@ function TabOne(props) {
       }
     ];
       onchange = e => {
-        setSearch(e.target.value);
-        filtereduser()
-      };
-      const filtereduser=() => {
+        setsearch(e.target.value);
         let mysearch =[...data]
-        mysearch.filter(item => {
-        if(item.name!==undefined){
-          setMyData(item.name.toLowerCase().indexOf(search.toLowerCase()) !== -1);
-        }
-    })};
-    
+        setMyData(mysearch.filter(item =>{
+          return item.name.toLowerCase().indexOf(search.toLowerCase()) !== -1}))
+     
+      }
     const handleFilter =(e)=>{
       let search =[...data]
       if(e.target.value==="2"){
