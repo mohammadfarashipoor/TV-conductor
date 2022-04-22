@@ -34,9 +34,12 @@ function TabOne(props) {
       const onchange = e => {
         setsearch(e.target.value);
         let mysearch =[...data]
+        if(e.target.value===""){
+          setMyData(mysearch)
+        }else{
         setMyData(mysearch.filter(item =>{
           return item.name.toLowerCase().indexOf(search.toLowerCase()) !== -1}))
-      }
+      }}
     const handleFilter =(e)=>{
       let search =[...data]
       if(e.target.value==="2"){
@@ -63,7 +66,7 @@ function TabOne(props) {
         /></div></div> 
         </div>
         <div className="mb-2 mt-2">
-        <Button type="secondary" textbutton="جست و جو"/>
+        <Button type="secondary" onClick={onchange} textbutton="جست و جو"/>
         </div>
     </div>
     <div className="mb-2 mt-2">
