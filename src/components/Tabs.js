@@ -24,6 +24,7 @@ const Tabs = () => {
     useEffect(() => {
       fetchData();
     }, []);
+    
     const ComponentLoading = () => {
       return <div className="loading"><ClayLoadingIndicator small/></div>;
     };
@@ -55,7 +56,7 @@ const Tabs = () => {
             <TabOne data={data}/>
           </ClayTabs.TabPane>
           <ClayTabs.TabPane aria-labelledby="tab-2">
-            <TabTwo/>
+            <TabTwo data={data}/>
           </ClayTabs.TabPane>
         </ClayTabs.Content>
         </div>

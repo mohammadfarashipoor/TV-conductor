@@ -1,9 +1,15 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import Button from './Button';
 
 
 function WeekBtn(props) {
   const [button,setButton]=useState(1);
+  useEffect(()=>{
+    const d = new Date();
+    let day = d.getDay()+1;
+    activeBtn(day===7 ? 1 : day+1)
+    clickBtn(day===7 ? 1 : day+1)
+  },[])
   const week = [
     { id:1 ,
       day:"شنبه"},

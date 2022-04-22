@@ -17,7 +17,6 @@ const MyTable = (props) => {
   useEffect(() => {
     const startIndex = (myactivepage - 1)* mydelta;
     setCountItem(_(data).slice(startIndex).take(mydelta).value());
-
   }, [data]);
   const ComponentLoading = () => {
     return <tr><td colSpan="4"><div className="loading"><ClayLoadingIndicator small/></div></td></tr>;
@@ -43,8 +42,8 @@ const MyTable = (props) => {
           {countItem===undefined ? (<ComponentLoading />) :Object.values(countItem).map((item) => (
                       <ClayTable.Row key={item.id}>
                       <ClayTable.Cell headingTitle>{item.name}</ClayTable.Cell>
-                      <ClayTable.Cell>{item.day.toString()}</ClayTable.Cell>
-                      <ClayTable.Cell>{item.time.toString()}</ClayTable.Cell>
+                      <ClayTable.Cell>{item.day.map((itm)=>(<span key={itm.id}>{itm.day} </span>))}</ClayTable.Cell>
+                      <ClayTable.Cell>{item.time.noon} {item.time.hour} : {item.time.min}</ClayTable.Cell>
                       <ClayTable.Cell>{"Brazil"}</ClayTable.Cell>
                       <ClayTable.Cell>{item.type===1?"سیما":"صدا"}</ClayTable.Cell>
                       <ClayTable.Cell>{item.status?"فعال":"غیرفعال"}</ClayTable.Cell>

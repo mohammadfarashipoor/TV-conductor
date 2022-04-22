@@ -9,6 +9,7 @@ function TabOne(props) {
     const {data}= props;
     const [search,setsearch] = useState("");
     const [mydata,setMyData] = useState(data);
+  
     const selectBox1=[{
       label: "تمام",
         value: "1"
@@ -30,12 +31,11 @@ function TabOne(props) {
         value: "3"
       }
     ];
-      onchange = e => {
+      const onchange = e => {
         setsearch(e.target.value);
         let mysearch =[...data]
         setMyData(mysearch.filter(item =>{
           return item.name.toLowerCase().indexOf(search.toLowerCase()) !== -1}))
-     
       }
     const handleFilter =(e)=>{
       let search =[...data]
@@ -46,7 +46,7 @@ function TabOne(props) {
         setMyData(search.filter((item)=>(item.type===2)))
         
       }if(e.target.value==="1"){
-        setMyData(search)
+        setMyData(data)
       }
     }
       
