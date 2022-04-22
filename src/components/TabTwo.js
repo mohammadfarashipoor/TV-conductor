@@ -2,7 +2,7 @@
 import SelectBox from './SelectBox';
 import WeekBtn from './WeekBtn';
 import {useEffect, useState} from 'react'
-import Table from './Table';
+import TableWeek from './TableWeek';
 
 function TabTwo(props) {
   const {data}= props;
@@ -105,7 +105,7 @@ function TabTwo(props) {
             </div>
         <div>
           {myitems.map((item)=>(
-            <Table key={item.id} title={item.name}/>
+            <TableWeek key={item.id} item={item}/>
           ))}
             
         </div>
