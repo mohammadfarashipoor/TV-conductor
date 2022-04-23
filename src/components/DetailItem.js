@@ -80,6 +80,7 @@ function DetailItem() {
         }
         if(formik.values.name!==""){
             setMydata(newItem)
+            window.location.replace("/");
         }
     }
     const setMyRadio=(item)=>{

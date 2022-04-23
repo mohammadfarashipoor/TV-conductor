@@ -24,7 +24,7 @@ const Pagination = (props) => {
   }
   useEffect(() => {
     handlechange()
-  }, [activePage]);
+  });
     return (
       <>
       <ClayPaginationBarWithBasicItems

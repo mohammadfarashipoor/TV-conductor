@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import ClayTable from '@clayui/table';
 import {useEffect, useState} from 'react';
 import Pagination from './Pagination';
@@ -17,7 +18,10 @@ const MyTable = (props) => {
   useEffect(() => {
     const startIndex = (myactivepage - 1)* mydelta;
     setCountItem(_(data).slice(startIndex).take(mydelta).value());
-  }, [data]);
+  });
+  useEffect(() => {
+    console.log(mydelta)
+  },[mydelta]);
   const ComponentLoading = () => {
     return <tr><td colSpan="4"><div className="loading"><ClayLoadingIndicator small/></div></td></tr>;
   };
