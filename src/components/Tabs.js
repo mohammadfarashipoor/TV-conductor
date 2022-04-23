@@ -3,7 +3,7 @@ import TabOne from './TabOne';
 import axios from "axios";
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayTabs from '@clayui/tabs';
-import TabTwo from './TabTwo'
+import TabTwo from './TabTwo';
 
 
 const Tabs = () => {

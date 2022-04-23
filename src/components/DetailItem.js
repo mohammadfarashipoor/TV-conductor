@@ -11,7 +11,8 @@ import MyCheckBox from './MyCheckBox';
 import SelectBox from './SelectBox'
 import Button from './Button';
 import OutsideClickHandler from "./OutsideClickHandler";
-import Table from "./Table"
+import Table from "./Table";
+import { useFormik } from 'formik';
 
 
 function DetailItem() {
@@ -20,13 +21,13 @@ function DetailItem() {
     const [data,setData]=useState([{
         title: "تمام",
         value: "1"
-        },
+    },
         {
         title: "Option 2",
         value: "2"
         }]);
     const [isLoading,setIsLoading] = useState(true);
-    const [myname,setMayName]=useState();
+    const [myname,setMyName]=useState();
     const [special,setSpecial]=useState(false);
     const [explain,setExplain]=useState();
     const [checked, setChecked] = useState([]);
@@ -48,12 +49,25 @@ function DetailItem() {
         }
         }
     async function setMydata(data){
-        await axios.post('https://6242dd49b6734894c157e955.mockapi.io/date/d1/project1', data)
-          .then(response => console.log(response.data));
+        try {await axios.post('https://6242dd49b6734894c157e955.mockapi.io/date/d1/project1', data)
+        .then(response => console.log(response.data));
+        }catch(error){
+            console.log(error)
+        }
     }
-    const setMyRadio=(item)=>{
-        setRadio(item)
-    }
+
+    useEffect(() => {
+        fetchData();
+    }, []); 
+    const validate = values => {
+        const errors = {};
+      if (!values.name) {
+        errors.name = 'نام را وارد کنید';
+      } else if (values.name.length > 15) {
+        errors.name = 'نام وارد شده بیشتر از 15 حرف است';
+      }
+      return errors;
+    };
     const myData=()=>{
         let newItem = {
             name: myname ,
@@ -64,11 +78,13 @@ function DetailItem() {
             status: enable,
             special:special
         }
-        setMydata(newItem)
+        if(formik.values.name!==""){
+            setMydata(newItem)
+        }
     }
-        useEffect(() => {
-          fetchData();
-        }, []);    
+    const setMyRadio=(item)=>{
+        setRadio(item)
+    }
 
     const setDay=(item,value)=>{
         let updateList = [...checked];
@@ -101,10 +117,11 @@ function DetailItem() {
         setSelect(e.target.value)
     }
 
-    onchange = e => {
-        setMayName(e.target.value);
+    const onchange=(e)=>{
+        setMyName(e.target.value);
+        formik.values.name = e.target.value;
         setSearch(e.target.value);
-      };
+    };
       const filtereduser = data.filter(item => {
           if(item.name!==undefined){
               return item.name.toLowerCase().indexOf(search.toLowerCase()) !== -1;
@@ -232,21 +249,33 @@ function DetailItem() {
       const ComponentLoading = () => {
         return <div className="loading"><ClayLoadingIndicator small/></div>;
       };
+      const formik = useFormik({
+        initialValues: {
+          name: '',
+        },
+        validate,
+        onSubmit: values => {
+          return
+        },
+      });
   return (
       <>{isLoading ? ComponentLoading(): (
-
     <div className="p-4">
-        <div className="m-2">نام برنامه</div>
+    <form onSubmit={formik.handleSubmit}>
         <div className="d-flex col-lg-12 flex-wrap">
         <div className="ml-5 col-lg-5 p-0">
         <div className="d-flex flex-wrap">
             <div>نوع برنامه</div>
-            <div><InputRadio onChange={setMyRadio}/></div>
+            <div><InputRadio onChange={setMyRadio} /></div>
         </div>
         <div >
         <OutsideClickHandler
         onOutsideClick={() => {outsideClickHandler()}}>
-            <InputBasic onClick={insideClickHandler} onChange={onchange} placeholder={null}  name={"نام"}/>
+            <InputBasic onClick={insideClickHandler}
+            onInput={onchange}
+            onChange={formik.handleChange} 
+            placeholder={null}  name={"نام"}/>
+            {formik.errors.name ? <div className="text-danger m-1">* {formik.errors.name}</div> : null}
             {showList && (
                 data!==[] ?
                 filtereduser.map((item)=>(
@@ -296,8 +325,9 @@ function DetailItem() {
         <div className="d-flex mt-4"><MyCheckBox onClick={handelEnable} options={"فعال"}/></div>
         <div className="d-flex flex-wrap mt-5">
             <div className="mr-2 ml-2"><Link to="/"><Button type="secondary"textbutton={"انصراف"}/></Link></div>
-            <div ><Link to="/"><Button onClick={myData} type="primary"textbutton={"ذخیره"}/></Link></div>
-        </div>           
+            <div ><Button submit="submit" onClick={myData} type="primary"textbutton={"ذخیره"}/></div>
+        </div> 
+        </form>          
     </div>
       )}</>
   )
