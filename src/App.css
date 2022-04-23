@@ -28,3 +28,14 @@ top: 50%;
 .cursor-pointer{
     cursor: pointer;
 }
+.listshow{
+    height: 70vh;
+overflow-y: auto;
+direction: ltr;
+position: absolute;
+z-index: 5;
+
+}
+.listshow >div >div >div{
+    margin-bottom: 1px;
+}

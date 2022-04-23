@@ -37,6 +37,7 @@ function DetailItem() {
     const [hour,setHour]=useState();
     const [select,setSelect]=useState();
     const [radio,setRadio]=useState();
+    const [inputText, setInputText] = useState("");
     async function fetchData() {
         try {
             const result = await axios.get(
@@ -122,6 +123,7 @@ function DetailItem() {
         setMyName(e.target.value);
         formik.values.name = e.target.value;
         setSearch(e.target.value);
+        setInputText(e.target.value)
     };
       const filtereduser = data.filter(item => {
           if(item.name!==undefined){
@@ -259,6 +261,9 @@ function DetailItem() {
           return
         },
       });
+      const selectName=(name)=>{
+          setInputText(name)
+      }
   return (
       <>{isLoading ? ComponentLoading(): (
     <div className="p-4">
@@ -275,14 +280,18 @@ function DetailItem() {
             <InputBasic onClick={insideClickHandler}
             onInput={onchange}
             onChange={formik.handleChange} 
-            placeholder={null}  name={"نام"}/>
+            placeholder={null}
+            value={inputText}
+            name={"نام"}/>
             {formik.errors.name ? <div className="text-danger m-1">* {formik.errors.name}</div> : null}
+            <div className="listshow w-100">
             {showList && (
                 data!==[] ?
-                filtereduser.map((item)=>(
-                    <div className="listshow position-absolute w-100" key={item.id}><Table title={item.name}/></div>
-                )):<div>هیچ برنامه ای وجود ندارد</div> 
+                <div className="bg-white">{filtereduser.map((item)=>(
+                    <div onClick={()=>{selectName(item.name)}} className="w-100" key={item.id}><Table  title={item.name}/></div>
+                ))}</div>:<div className="bg-white p-2"><div>هیچ برنامه ای وجود ندارد</div></div>
             )}
+            </div>
         </OutsideClickHandler>
 
         </div>
