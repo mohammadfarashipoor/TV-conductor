@@ -11,7 +11,8 @@ const InputComponent = (props) => {
           placeholder={props.placeholder}
           type="text"
           component={props.component}
-          onClick={props.onClick}
+          onChange={props.onClick}
+          onInput={props.onInput}
         />
       </ClayForm.Group>
     );

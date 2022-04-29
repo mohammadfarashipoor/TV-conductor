@@ -12,12 +12,8 @@ import SelectBox from './SelectBox'
 import Button from './Button';
 import OutsideClickHandler from "./OutsideClickHandler";
 import Table from "./Table";
-import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
-
-
-function DetailItem() {
-    const navigate = useNavigate();
+const EditItem=(props)=> {
     const [search,setSearch] = useState("");
     const [showList,setShowList] = useState(false)
     const [data,setData]=useState([{
@@ -34,12 +30,19 @@ function DetailItem() {
     const [explain,setExplain]=useState();
     const [checked, setChecked] = useState([]);
     const [enable,setEnable] = useState(false);
-    const [noon,setNoon]=useState(1);
-    const [min,setMin]=useState(0);
-    const [hour,setHour]=useState(0);
+    const [noon,setNoon]=useState();
+    const [min,setMin]=useState();
+    const [hour,setHour]=useState();
     const [select,setSelect]=useState();
     const [radio,setRadio]=useState();
     const [inputText, setInputText] = useState("");
+    const [itemselected,setItemSelected] = useState();
+    const [bolcheckboxspecial,setBolCheckboxSpecial] = useState(false);
+    const [bolcheckboxenable,setBolCheckboxEnable] = useState(false);
+    const [bolcheckboxmyweek,setBolCheckboxMyWeek] = useState(false);
+    const [bolcheckboxmytime,setBolCheckboxMyTime] = useState();
+
+
     async function fetchData() {
         try {
             const result = await axios.get(
@@ -58,10 +61,57 @@ function DetailItem() {
             console.log(error)
         }
     }
+    async function itemSelect(item){
+        try {await axios.get(`https://6242dd49b6734894c157e955.mockapi.io/date/d1/project1/${item.id}`)
+        .then(response => console.log(response.data));
+        }catch(error){
+            console.log(error)
+        }
+    }
 
     useEffect(() => {
-        fetchData();
+        itemSelect(props.itemselected)
+        setItemSelected(props.itemselected)
+        setDataItem(props.itemselected)
+        fetchData()
     }, []); 
+    const setDataItem= (item)=>{
+        selectName(item.name)
+        setExplainItem(item.explain)
+        setBolCheckboxSpecial(item.special)
+        setBolCheckboxEnable(item.enable)
+        setBolCheckboxMyWeek(item.day)
+        setBolCheckboxMyTime(item.time)
+    }
+    const bolcheckboxweek=(id)=>{
+        let daily=[];
+        bolcheckboxmyweek.map((item)=>{
+            daily.push(item.id)
+        })
+        if(id===1 && daily.indexOf(1)!==-1){
+            return true
+        }
+        if(id===2 && daily.indexOf(2)!==-1){
+            return true
+        }
+        if(id===3 && daily.indexOf(3)!==-1){
+            return true
+        }
+        if(id===4 && daily.indexOf(4)!==-1){
+            return true
+        }
+        if(id===5 && daily.indexOf(5)!==-1){
+            return true
+        }
+        if(id===6 && daily.indexOf(6)!==-1){
+            return true
+        }
+        if(id===7 && daily.indexOf(7)!==-1){
+            return true
+        }else{
+            return false
+        }
+    }
     const validate = values => {
         const errors = {};
       if (!values.name) {
@@ -83,7 +133,7 @@ function DetailItem() {
         }
         if(formik.values.name!==""){
             setMydata(newItem)
-            navigate("/");
+            window.location.replace("/");
         }
     }
     const setMyRadio=(item)=>{
@@ -102,9 +152,7 @@ function DetailItem() {
         }
         setChecked(updateList) 
     }
-    const handelEnable=()=>{
-        setEnable(!enable);
-    }
+    
     const handleExplain = (e) => {
          setExplain(e.target.value)
     };
@@ -127,6 +175,9 @@ function DetailItem() {
         setSearch(e.target.value);
         setInputText(e.target.value)
     };
+    const onchangeExplain=(e)=>{
+        setExplain(e.target.value)
+    }
       const filtereduser = data.filter(item => {
           if(item.name!==undefined){
               return item.name.toLowerCase().indexOf(search.toLowerCase()) !== -1;
@@ -266,6 +317,10 @@ function DetailItem() {
       const selectName=(name)=>{
           setInputText(name)
       }
+      const setExplainItem=(text)=>{
+        setExplain(text)
+    }
+      
   return (
       <>{isLoading ? ComponentLoading(): (
     <div className="p-4">
@@ -284,7 +339,8 @@ function DetailItem() {
             onChange={formik.handleChange} 
             placeholder={null}
             value={inputText}
-            name={"نام"}/>
+            name={"نام"}
+            />
             {formik.errors.name ? <div className="text-danger m-1">* {formik.errors.name}</div> : null}
             {showList && (
                 data!==[] ?
@@ -306,11 +362,12 @@ function DetailItem() {
         </div>
         </div>
         <div className="d-flex mt-5">
-            <MyCheckBox options={"برنامه ویژه"} onClick={()=>{setSpecial(!special)}}/>
+            <MyCheckBox boolean={bolcheckboxspecial} options={"برنامه ویژه"}             
+            onClick={()=>{setSpecial(!special)}}/>
         </div>
             <div><p className="font-weight-light">این گزینه صرفا جهت نوع نمایش متن و عکس در برتلت " نمایش جدول پخش" کاربرد دارد و در این نمایش ، فقط برنامه هایی نمایش داده می شود که این کزینه انتخاب شده باشد</p></div>
         <div>
-            <InputComponent placeholder={null} onClick={handleExplain} component={"textarea"} name={"توضیح"}/>
+            <InputComponent placeholder={null} onChange={handleExplain} onInput={onchangeExplain} component={"textarea"} name={"توضیح"}/>
         </div>
         <div>
             <SelectBox options={selectBox} onClick={handleSelect}/>
@@ -318,21 +375,21 @@ function DetailItem() {
         <div className="mt-5">
             <div className="mb-2">زمان پخش</div>
             <div className="d-flex flex-wrap">
-                <div className="mr-2 ml-2"><SelectBox onClick={handleNoon} options={selectBox1}/></div>
-                <div className="mr-2 ml-2"><SelectBox onClick={handleMin} options={selectMin}/></div>
-                <div className="mr-2 ml-2"><SelectBox onClick={handleHours} options={selectHours}/></div>
+                <div className="mr-2 ml-2"><SelectBox val={bolcheckboxmytime[0]===2?"بعد از ظهر":"قبل از ظهر"}onClick={handleNoon}  options={selectBox1}/></div>
+                <div className="mr-2 ml-2"><SelectBox val={bolcheckboxmytime[1]}onClick={handleMin} options={selectMin}/></div>
+                <div className="mr-2 ml-2"><SelectBox val={bolcheckboxmytime[2]}onClick={handleHours} options={selectHours}/></div>
             </div>
         </div>
         <div className="mt-4 mr-3">
                 <div className="mb-2">روز های پخش:</div>
                 <div>
                 {week.map((item)=>(
-                    <div className="d-flex m-1"key={item.id} ><MyCheckBox item={item} onClick={setDay} options={item.day}/>
+                    <div className="d-flex m-1"key={item.id} ><MyCheckBox boolean={()=>bolcheckboxweek(item.id)} item={item} onClick={setDay} options={item.day}/>
                     </div>
                 ))}
             </div>
         </div>
-        <div className="d-flex mt-4"><MyCheckBox onClick={handelEnable} options={"فعال"}/></div>
+        <div className="d-flex mt-4"><MyCheckBox boolean={bolcheckboxenable} onClick={()=>setEnable(!enable)} options={"فعال"}/></div>
         <div className="d-flex flex-wrap mt-5">
             <div className="mr-2 ml-2"><Link to="/"><Button type="secondary"textbutton={"انصراف"}/></Link></div>
             <div ><Button submit="submit" onClick={myData} type="primary"textbutton={"ذخیره"}/></div>
@@ -343,4 +400,4 @@ function DetailItem() {
   )
 }
 
-export default DetailItem
+export default EditItem

@@ -29,7 +29,7 @@ top: 50%;
     cursor: pointer;
 }
 .listshow{
-    height: 70vh;
+    height: auto;
 overflow-y: auto;
 direction: ltr;
 position: absolute;

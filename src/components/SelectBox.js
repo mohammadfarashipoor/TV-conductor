@@ -3,7 +3,7 @@ import {ClaySelect} from '@clayui/form';
 const SelectBox = (props) => {
     const options = props.options;
     return (
-      <ClaySelect aria-label="Select Label" id="mySelectId">
+      <ClaySelect defaultValue={props.val} aria-label="Select Label" id="mySelectId">
         {options.map(item => (
           <ClaySelect.Option
             key={item.value}

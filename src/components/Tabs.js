@@ -6,7 +6,7 @@ import ClayTabs from '@clayui/tabs';
 import TabTwo from './TabTwo';
 
 
-const Tabs = () => {
+const Tabs = (props) => {
   const [activeTabKeyValue, setActiveTabKeyValue] = useState(0);
   const [data,setData]=useState();
   const [isLoading,setIsLoading] = useState(true);
@@ -28,6 +28,9 @@ const Tabs = () => {
     const ComponentLoading = () => {
       return <div className="loading"><ClayLoadingIndicator small/></div>;
     };
+    const passItem=(item)=>{
+      props.passItem(item)
+    }
     return (
       <>{isLoading ? ComponentLoading(): (
       <div className="m-4">
@@ -53,7 +56,7 @@ const Tabs = () => {
         </ClayTabs>
         <ClayTabs.Content activeIndex={activeTabKeyValue} fade>
           <ClayTabs.TabPane aria-labelledby="tab-1">
-            <TabOne data={data}/>
+            <TabOne data={data} passItem={passItem}/>
           </ClayTabs.TabPane>
           <ClayTabs.TabPane aria-labelledby="tab-2">
             <TabTwo data={data}/>

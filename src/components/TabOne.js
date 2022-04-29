@@ -52,6 +52,9 @@ function TabOne(props) {
         setMyData(data)
       }
     }
+    const passItem=(item)=>{
+      props.passItem(item)
+    }
       
   return (
     <div>            
@@ -60,9 +63,10 @@ function TabOne(props) {
       <div className="d-flex align-items-center flex-wrap pl-3 pr-3"><div className="m-1">انطباق با</div><div className="m-1"><SelectBox options={selectBox1}/></div><div className="m-1">فیلد های زیر</div></div>
       <div className="d-flex w-100 col-lg-12 flex-lg-nowrap flex-wrap">
         <div className="w-100 col-lg-6 col-sm-12"><InputBasic onChange={onchange} placeholder={null} onClick={null} name="نام" /></div>
-        <div className="w-100 col-lg-6 col-sm-12"><div className="mb-1 ">نوع برنامه</div><div><SelectBox 
+        <div className="w-100 col-lg-6 col-sm-12"><div className="mb-1 ">نوع برنامه</div><div>
+        <SelectBox 
         options={selectBox2}
-        onClick={handleFilter}
+        onClick={(e)=>handleFilter(e)}
         /></div></div> 
         </div>
         <div className="mb-2 mt-2">
@@ -74,7 +78,7 @@ function TabOne(props) {
       <Button type="secondary" textbutton="افزودن برنامه" onClick={null}/>
     </Link>
     </div>
-    <div ><MyTable data={mydata}/></div>
+    <div ><MyTable passItem={passItem} data={mydata}/></div>
   </div></div>
   )
 }
