@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@clayui/alert": "^3.40.0",
     "@clayui/css": "^3.52.0",
     "@clayui/form": "^3.52.0",
     "@clayui/loading-indicator": "^3.40.0",

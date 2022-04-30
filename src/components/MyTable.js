@@ -6,7 +6,7 @@ import _ from 'lodash';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import { useNavigate } from 'react-router-dom';
 const MyTable = (props) => {
-  const {data}= props;
+  const {data}=props
   const [myactivepage,setMyActivePage]= useState(1);
   const [mydelta,setMyDelta]= useState(20);
   const [countItem,setCountItem]=useState(data);
@@ -51,7 +51,7 @@ const MyTable = (props) => {
             <ClayTable.Row  key={item.id} onClick={() => {passItem(item)}}>
                       <ClayTable.Cell headingTitle>{item.name}</ClayTable.Cell>
                       <ClayTable.Cell>{item.day.map((itm)=>(<span key={itm.id}>{itm.day} </span>))}</ClayTable.Cell>
-                      <ClayTable.Cell>{item.time[0]===2?"بعد از ظهر":"قبل از ظهر"} {item.time[1]} : {item.time[2]}</ClayTable.Cell>
+                      <ClayTable.Cell>{item.time[0]===2?"بعد از ظهر":"قبل از ظهر"}  {('0'+item.time[2]).slice(-2)} : {('0'+item.time[1]).slice(-2)}</ClayTable.Cell>
                       <ClayTable.Cell>{"Brazil"}</ClayTable.Cell>
                       <ClayTable.Cell>{item.type===1?"سیما":"صدا"}</ClayTable.Cell>
                       <ClayTable.Cell>{item.status?"فعال":"غیرفعال"}</ClayTable.Cell>

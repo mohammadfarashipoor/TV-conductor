@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 
 
-function DetailItem() {
+function DetailItem(props) {
     const navigate = useNavigate();
     const [search,setSearch] = useState("");
     const [showList,setShowList] = useState(false)
@@ -40,6 +40,9 @@ function DetailItem() {
     const [select,setSelect]=useState();
     const [radio,setRadio]=useState();
     const [inputText, setInputText] = useState("");
+    const passAlert=(bol)=>{
+        props.passAlert(bol)
+    }
     async function fetchData() {
         try {
             const result = await axios.get(
@@ -53,12 +56,12 @@ function DetailItem() {
         }
     async function setMydata(data){
         try {await axios.post('https://6242dd49b6734894c157e955.mockapi.io/date/d1/project1', data)
-        .then(response => console.log(response.data));
+        .then(response => passAlert(true));
         }catch(error){
-            console.log(error)
+            passAlert(false)
         }
     }
-
+    
     useEffect(() => {
         fetchData();
     }, []); 
@@ -87,7 +90,12 @@ function DetailItem() {
         }
     }
     const setMyRadio=(item)=>{
-        setRadio(item)
+        if(item==="سینما"){
+            setRadio(1)
+        }else{
+            setRadio(2)
+        }
+       
     }
 
     const setDay=(item,value)=>{
@@ -327,12 +335,12 @@ function DetailItem() {
                 <div className="mb-2">روز های پخش:</div>
                 <div>
                 {week.map((item)=>(
-                    <div className="d-flex m-1"key={item.id} ><MyCheckBox item={item} onClick={setDay} options={item.day}/>
+                    <div className="d-flex m-1"key={item.id} ><MyCheckBox boolean={false} item={item} onClick={setDay} options={item.day}/>
                     </div>
                 ))}
             </div>
         </div>
-        <div className="d-flex mt-4"><MyCheckBox onClick={handelEnable} options={"فعال"}/></div>
+        <div className="d-flex mt-4"><MyCheckBox boolean={false} onClick={handelEnable} options={"فعال"}/></div>
         <div className="d-flex flex-wrap mt-5">
             <div className="mr-2 ml-2"><Link to="/"><Button type="secondary"textbutton={"انصراف"}/></Link></div>
             <div ><Button submit="submit" onClick={myData} type="primary"textbutton={"ذخیره"}/></div>

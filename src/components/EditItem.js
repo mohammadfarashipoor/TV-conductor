@@ -12,8 +12,10 @@ import SelectBox from './SelectBox'
 import Button from './Button';
 import OutsideClickHandler from "./OutsideClickHandler";
 import Table from "./Table";
+import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 const EditItem=(props)=> {
+    const navigate = useNavigate();
     const [search,setSearch] = useState("");
     const [showList,setShowList] = useState(false)
     const [data,setData]=useState([{
@@ -31,17 +33,18 @@ const EditItem=(props)=> {
     const [checked, setChecked] = useState([]);
     const [enable,setEnable] = useState(false);
     const [noon,setNoon]=useState();
-    const [min,setMin]=useState();
-    const [hour,setHour]=useState();
+    const [min,setMin]=useState(0);
+    const [hour,setHour]=useState(0);
     const [select,setSelect]=useState();
     const [radio,setRadio]=useState();
     const [inputText, setInputText] = useState("");
-    const [itemselected,setItemSelected] = useState();
     const [bolcheckboxspecial,setBolCheckboxSpecial] = useState(false);
     const [bolcheckboxenable,setBolCheckboxEnable] = useState(false);
     const [bolcheckboxmyweek,setBolCheckboxMyWeek] = useState(false);
     const [bolcheckboxmytime,setBolCheckboxMyTime] = useState();
-
+    const passAlert=(bol)=>{
+        props.passAlert(bol)
+    }
 
     async function fetchData() {
         try {
@@ -55,23 +58,15 @@ const EditItem=(props)=> {
         }
         }
     async function setMydata(data){
-        try {await axios.post('https://6242dd49b6734894c157e955.mockapi.io/date/d1/project1', data)
-        .then(response => console.log(response.data));
+        try {await axios.put(`https://6242dd49b6734894c157e955.mockapi.io/date/d1/project1/${props.itemselected.id}`, data)
+        .then(response => passAlert(true));
         }catch(error){
-            console.log(error)
+            passAlert(false)
         }
     }
-    async function itemSelect(item){
-        try {await axios.get(`https://6242dd49b6734894c157e955.mockapi.io/date/d1/project1/${item.id}`)
-        .then(response => console.log(response.data));
-        }catch(error){
-            console.log(error)
-        }
-    }
+    
 
     useEffect(() => {
-        itemSelect(props.itemselected)
-        setItemSelected(props.itemselected)
         setDataItem(props.itemselected)
         fetchData()
     }, []); 
@@ -133,7 +128,7 @@ const EditItem=(props)=> {
         }
         if(formik.values.name!==""){
             setMydata(newItem)
-            window.location.replace("/");
+            navigate("/");
         }
     }
     const setMyRadio=(item)=>{
@@ -376,8 +371,8 @@ const EditItem=(props)=> {
             <div className="mb-2">زمان پخش</div>
             <div className="d-flex flex-wrap">
                 <div className="mr-2 ml-2"><SelectBox val={bolcheckboxmytime[0]===2?"بعد از ظهر":"قبل از ظهر"}onClick={handleNoon}  options={selectBox1}/></div>
-                <div className="mr-2 ml-2"><SelectBox val={bolcheckboxmytime[1]}onClick={handleMin} options={selectMin}/></div>
-                <div className="mr-2 ml-2"><SelectBox val={bolcheckboxmytime[2]}onClick={handleHours} options={selectHours}/></div>
+                <div className="mr-2 ml-2"><SelectBox val={bolcheckboxmytime[1]} onClick={handleMin} options={selectMin}/></div>
+                <div className="mr-2 ml-2"><SelectBox val={bolcheckboxmytime[2]} onClick={handleHours} options={selectHours}/></div>
             </div>
         </div>
         <div className="mt-4 mr-3">

@@ -41,14 +41,14 @@ function TabTwo(props) {
       if(item===2){
               data.filter((items)=>{
                 items.day.filter((item)=>{
-              if (item.day==="یکشنبه"){
+              if (item.day==="یک شنبه"){
                 myarray = [...myarray,items];
               }})})}
              
       if(item===3){
           data.filter((items)=>{
             items.day.filter((item)=>{
-              if (item.day==="دو شنبه"){
+              if (item.day==="دوشنبه"){
                 myarray = [...myarray,items];
               }})})}
           
@@ -98,7 +98,7 @@ function TabTwo(props) {
     <div className="ml-5 mr-5 mt-2">
         <div className="d-flex align-items-center flex-wrap pl-3 pr-3">
           <div className="m-3">نوع کنداکتور</div>
-          <div><SelectBox className="m-3" onClick={handleClick} options={selectBox} /></div>
+          <div><SelectBox className="m-3" onClick={(e)=>handleClick(e)} options={selectBox} /></div>
         </div>
         <div>
             <WeekBtn selectbtn={selectBtn}/>
