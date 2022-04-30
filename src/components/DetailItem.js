@@ -38,7 +38,7 @@ function DetailItem(props) {
     const [min,setMin]=useState(0);
     const [hour,setHour]=useState(0);
     const [select,setSelect]=useState();
-    const [radio,setRadio]=useState();
+    const [radio,setRadio]=useState(1);
     const [inputText, setInputText] = useState("");
     const passAlert=(bol)=>{
         props.passAlert(bol)
