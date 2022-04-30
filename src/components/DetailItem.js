@@ -342,7 +342,7 @@ function DetailItem(props) {
         </div>
         <div className="d-flex mt-4"><MyCheckBox boolean={false} onClick={handelEnable} options={"فعال"}/></div>
         <div className="d-flex flex-wrap mt-5">
-            <div className="mr-2 ml-2"><Link to="/"><Button type="secondary"textbutton={"انصراف"}/></Link></div>
+            <div className="mr-2 ml-2"><Link to="/"><Button onClick={()=>{passAlert(null)}} type="secondary"textbutton={"انصراف"}/></Link></div>
             <div ><Button submit="submit" onClick={myData} type="primary"textbutton={"ذخیره"}/></div>
         </div> 
         </form>          

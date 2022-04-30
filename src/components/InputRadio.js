@@ -2,7 +2,7 @@ import {useState} from 'react'
 import {ClayRadio, ClayRadioGroup} from '@clayui/form';
 
 const InputRadio = (props) => {
-	const [value, setValue] = useState('سیما');
+	const [value, setValue] = useState(props.default ===1?'سیما':'صدا');
 	function handelClick(value){
 		setValue(value)
 		props.onChange(value)

@@ -38,6 +38,7 @@ const EditItem=(props)=> {
     const [select,setSelect]=useState();
     const [radio,setRadio]=useState();
     const [inputText, setInputText] = useState("");
+    const [bolcheckboxradio,setBolCheckboxRadio] = useState(1);
     const [bolcheckboxspecial,setBolCheckboxSpecial] = useState(false);
     const [bolcheckboxenable,setBolCheckboxEnable] = useState(false);
     const [bolcheckboxmyweek,setBolCheckboxMyWeek] = useState(false);
@@ -77,6 +78,7 @@ const EditItem=(props)=> {
         setBolCheckboxEnable(item.enable)
         setBolCheckboxMyWeek(item.day)
         setBolCheckboxMyTime(item.time)
+        setBolCheckboxRadio(item.type)
     }
     const bolcheckboxweek=(id)=>{
         let daily=[];
@@ -324,7 +326,7 @@ const EditItem=(props)=> {
         <div className="ml-5 col-lg-5 p-0">
         <div className="d-flex flex-wrap">
             <div>نوع برنامه</div>
-            <div><InputRadio onChange={setMyRadio} /></div>
+            <div><InputRadio default={bolcheckboxradio} onChange={setMyRadio} /></div>
         </div>
         <div >
         <OutsideClickHandler
@@ -386,7 +388,7 @@ const EditItem=(props)=> {
         </div>
         <div className="d-flex mt-4"><MyCheckBox boolean={bolcheckboxenable} onClick={()=>setEnable(!enable)} options={"فعال"}/></div>
         <div className="d-flex flex-wrap mt-5">
-            <div className="mr-2 ml-2"><Link to="/"><Button type="secondary"textbutton={"انصراف"}/></Link></div>
+            <div className="mr-2 ml-2"><Link to="/"><Button onClick={()=>{passAlert(null)}} type="secondary"textbutton={"انصراف"}/></Link></div>
             <div ><Button submit="submit" onClick={myData} type="primary"textbutton={"ذخیره"}/></div>
         </div> 
         </form>          

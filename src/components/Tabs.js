@@ -23,7 +23,7 @@ const Tabs = (props) => {
         console.error(error);
       }
     }
-
+    
     useEffect(() => {
       fetchData();
       
