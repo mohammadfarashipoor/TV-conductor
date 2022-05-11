@@ -1,5 +1,10 @@
+@font-face {
+    font-family: 'IRANSansWeb';
+    src: local('IRANSansWeb'), url(./fonts/IRANSansWeb.ttf) format('truetype');
+  }
 *{
     direction: rtl;
+    font-family:IRANSansWeb;
 }
 .pagination{
     direction: ltr !important;

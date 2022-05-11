@@ -4,6 +4,7 @@ import Tabs from './components/Tabs'
 import DetailItem from './components/DetailItem';
 import EditItem from './components/EditItem'
 import {useState}from 'react';
+import './fonts/IRANSansWeb.ttf'
 
 
 
